@@ -9,7 +9,7 @@ namespace AlphaVantageApiCall
         static async Task Main(string[] args)
         {
             string apiKey = "YOUR_API_KEY"; 
-            string symbol = "IBM";
+            string symbol = "TCOM";
 
             string incomeStatementUrl = $"https://www.alphavantage.co/query?function=INCOME_STATEMENT&symbol={symbol}&apikey={apiKey}";
             string globalQuoteUrl = $"https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol={symbol}&apikey={apiKey}";
@@ -40,14 +40,7 @@ namespace AlphaVantageApiCall
                 double earningsYield = CalculateEarningsYield(ebit, enterpriseValue);
                 double returnOnCapital = CalculateReturnOnCapital(ebit, netWorkingCapital, propertyPlantEquipment);
 
-                // Convert to percentage
-                double returnOnCapitalPercentage = returnOnCapital * 100;
-                double earningsYieldPercentage = earningsYield * 100;
-
-                // Round to 2 decimal places for readability
-                returnOnCapitalPercentage = Math.Round(returnOnCapitalPercentage, 2);
-                earningsYieldPercentage = Math.Round(earningsYieldPercentage, 2);
-                await Console.Out.WriteLineAsync($"{symbol} Return On Capital: {returnOnCapitalPercentage}%, Earnings Yield: {earningsYieldPercentage}%");
+                ConvertEarningYieldAndReturnOnCapitalToPercentage(symbol, returnOnCapital, earningsYield);
             }
             catch (Exception ex)
             {
@@ -166,13 +159,20 @@ namespace AlphaVantageApiCall
         {
             if (report.TryGetProperty(fieldName, out JsonElement fieldElement))
             {
-                if (double.TryParse(fieldElement.GetString(), out double fieldValue))
+                string fieldValue = fieldElement.GetString();
+
+                if (string.IsNullOrEmpty(fieldValue) || fieldValue.Equals("None", StringComparison.OrdinalIgnoreCase))
                 {
-                    return fieldValue;
+                    return 0.0; 
+                }
+
+                if (double.TryParse(fieldValue, out double result))
+                {
+                    return result;
                 }
                 else
                 {
-                    throw new FormatException($"{fieldName} value could not be parsed to a double.");
+                    throw new FormatException($"{fieldName} value '{fieldValue}' could not be parsed to a double.");
                 }
             }
             else
@@ -180,7 +180,6 @@ namespace AlphaVantageApiCall
                 throw new InvalidOperationException($"{fieldName} field not found in the most recent report.");
             }
         }
-
 
         private static double CalculateNetWorkingCapital(double currentAssets, double currentLiabilities)
         {
@@ -192,7 +191,6 @@ namespace AlphaVantageApiCall
             return price * outstandingShares;
         }
 
-
         private static double CalculateEarningsYield(double ebit, double enterpriseValue)
         {
             return ebit / enterpriseValue;
@@ -201,6 +199,17 @@ namespace AlphaVantageApiCall
         private static double CalculateReturnOnCapital(double ebit, double netWorkingCapital, double fixedAssets)
         {
             return ebit / (netWorkingCapital + fixedAssets);
+        }
+
+        private static void ConvertEarningYieldAndReturnOnCapitalToPercentage(string symbol, double returnOnCapital, double earningsYield)
+        {
+            double returnOnCapitalPercentage = returnOnCapital * 100;
+            double earningsYieldPercentage = earningsYield * 100;
+
+            returnOnCapitalPercentage = Math.Round(returnOnCapitalPercentage, 2);
+            earningsYieldPercentage = Math.Round(earningsYieldPercentage, 2);
+
+            Console.Out.WriteLineAsync($"{symbol} Return On Capital: {returnOnCapitalPercentage}%, Earnings Yield: {earningsYieldPercentage}%");
         }
     }
 }
