@@ -42,6 +42,7 @@ namespace AlphaVantageApiCall
 
                 double earningsYield = CalculateEarningsYield(ebit, enterpriseValue);
                 double returnOnCapital = CalculateReturnOnCapital(ebit, netWorkingCapital, fixedAssets);
+                await Console.Out.WriteLineAsync($"{symbol} Return On Capital: {returnOnCapital}, Earnings Yield: {earningsYield}");
             }
             catch (Exception ex)
             {
