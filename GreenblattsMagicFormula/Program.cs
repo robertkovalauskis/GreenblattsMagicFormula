@@ -32,16 +32,13 @@ namespace AlphaVantageApiCall
 
                 Console.WriteLine($"Fetching Balance Sheet for {symbol}...");
                 var balanceSheet = await FetchApiDataAsync(balanceSheetUrl);
-                // TODO: Handle BALANCE_SHEET parameter extraction in one method
-                var fixedAssets = ExtractMostRecentFixedAssets(balanceSheet);
-                var totalCurrentAssets = ExtractTotalCurrentAssets(balanceSheet);
-                var totalCurrentLiabilities = ExtractTotalCurrentLiabilities(balanceSheet);
+                var (propertyPlantEquipment, totalCurrentAssets, totalCurrentLiabilities) = ExtractBalanceSheetData(balanceSheet);
 
                 var netWorkingCapital = CalculateNetWorkingCapital(totalCurrentAssets, totalCurrentLiabilities);
                 var enterpriseValue = CalculateEnterpriseValue(currentPrice, sharesOutstanding);
 
                 double earningsYield = CalculateEarningsYield(ebit, enterpriseValue);
-                double returnOnCapital = CalculateReturnOnCapital(ebit, netWorkingCapital, fixedAssets);
+                double returnOnCapital = CalculateReturnOnCapital(ebit, netWorkingCapital, propertyPlantEquipment);
 
                 // Convert to percentage
                 double returnOnCapitalPercentage = returnOnCapital * 100;
@@ -145,28 +142,19 @@ namespace AlphaVantageApiCall
             }
         }
 
-        private static double ExtractMostRecentFixedAssets(JsonDocument jsonDocument)
+        private static (double PropertyPlantEquipment, double TotalCurrentAssets, double TotalCurrentLiabilities) ExtractBalanceSheetData(JsonDocument jsonDocument)
         {
             if (jsonDocument.RootElement.TryGetProperty("annualReports", out JsonElement annualReports))
             {
                 // Get the most recent report (first element in the array)
                 JsonElement mostRecentReport = annualReports.EnumerateArray().First();
 
-                if (mostRecentReport.TryGetProperty("propertyPlantEquipment", out JsonElement ppeElement))
-                {
-                    if (double.TryParse(ppeElement.GetString(), out double propertyPlantEquipment))
-                    {
-                        return propertyPlantEquipment;
-                    }
-                    else
-                    {
-                        throw new FormatException("PropertyPlantEquipment value could not be parsed to a double.");
-                    }
-                }
-                else
-                {
-                    throw new InvalidOperationException("PropertyPlantEquipment field not found in the most recent report.");
-                }
+                // Extract each parameter and handle missing or malformed fields
+                double propertyPlantEquipment = ExtractFieldAsDouble(mostRecentReport, "propertyPlantEquipment");
+                double totalCurrentAssets = ExtractFieldAsDouble(mostRecentReport, "totalCurrentAssets");
+                double totalCurrentLiabilities = ExtractFieldAsDouble(mostRecentReport, "totalCurrentLiabilities");
+
+                return (propertyPlantEquipment, totalCurrentAssets, totalCurrentLiabilities);
             }
             else
             {
@@ -174,63 +162,25 @@ namespace AlphaVantageApiCall
             }
         }
 
-        private static double ExtractTotalCurrentAssets(JsonDocument jsonDocument)
+        private static double ExtractFieldAsDouble(JsonElement report, string fieldName)
         {
-            if (jsonDocument.RootElement.TryGetProperty("annualReports", out JsonElement annualReports))
+            if (report.TryGetProperty(fieldName, out JsonElement fieldElement))
             {
-                // Get the most recent report (first element in the array)
-                JsonElement mostRecentReport = annualReports.EnumerateArray().First();
-
-                if (mostRecentReport.TryGetProperty("totalCurrentAssets", out JsonElement tcaElement))
+                if (double.TryParse(fieldElement.GetString(), out double fieldValue))
                 {
-                    if (double.TryParse(tcaElement.GetString(), out double totalCurrentAssets))
-                    {
-                        return totalCurrentAssets;
-                    }
-                    else
-                    {
-                        throw new FormatException("TotalCurrentAssets value could not be parsed to a double.");
-                    }
+                    return fieldValue;
                 }
                 else
                 {
-                    throw new InvalidOperationException("TotalCurrentAssets field not found in the most recent report.");
+                    throw new FormatException($"{fieldName} value could not be parsed to a double.");
                 }
             }
             else
             {
-                throw new InvalidOperationException("Annual Reports section not found in the response.");
+                throw new InvalidOperationException($"{fieldName} field not found in the most recent report.");
             }
         }
 
-        private static double ExtractTotalCurrentLiabilities(JsonDocument jsonDocument)
-        {
-            if (jsonDocument.RootElement.TryGetProperty("annualReports", out JsonElement annualReports))
-            {
-                // Get the most recent report (first element in the array)
-                JsonElement mostRecentReport = annualReports.EnumerateArray().First();
-
-                if (mostRecentReport.TryGetProperty("totalCurrentLiabilities", out JsonElement tclElement))
-                {
-                    if (double.TryParse(tclElement.GetString(), out double totalCurrentLiabilities))
-                    {
-                        return totalCurrentLiabilities;
-                    }
-                    else
-                    {
-                        throw new FormatException("TotalCurrentLiabilities value could not be parsed to a double.");
-                    }
-                }
-                else
-                {
-                    throw new InvalidOperationException("TotalCurrentLiabilities field not found in the most recent report.");
-                }
-            }
-            else
-            {
-                throw new InvalidOperationException("Annual Reports section not found in the response.");
-            }
-        }
 
         private static double CalculateNetWorkingCapital(double currentAssets, double currentLiabilities)
         {
