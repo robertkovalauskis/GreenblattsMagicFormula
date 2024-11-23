@@ -22,11 +22,11 @@ namespace AlphaVantageApiCall
                 var incomeStatementData = await FetchApiDataAsync(incomeStatementUrl);
                 double ebit = ExtractMostRecentEbit(incomeStatementData);
 
-                await Console.Out.WriteLineAsync($"Fetching Global Quote for {symbol}");
+                await Console.Out.WriteLineAsync($"Fetching Global Quote for {symbol}...");
                 var globalStatement = await FetchApiDataAsync(globalQuoteUrl);
                 double currentPrice = ExtractCurrentPrice(globalStatement);
 
-                await Console.Out.WriteLineAsync($"Fetching Overview for {symbol}");
+                await Console.Out.WriteLineAsync($"Fetching Overview for {symbol}...");
                 var overview = await FetchApiDataAsync(overviewUrl);
                 var sharesOutstanding = ExtractSharesOutstanding(overview);
 
