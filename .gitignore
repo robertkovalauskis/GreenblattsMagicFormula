@@ -1,7 +1,7 @@
-﻿################################################################################
-# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
-################################################################################
+﻿# Ignore environment files
+.env
 
+# Ignore compiled binaries
 /.vs
 bin/
 obj/
