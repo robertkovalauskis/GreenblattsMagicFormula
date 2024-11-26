@@ -11,7 +11,7 @@ namespace GreeenblattsMagicFormulaTests.UnitTests
         private const string ApiKey = "TEST_API_KEY";
         private const string Symbol = "AAPL";
 
-        private HttpClient CreateMockHttpClient(HttpStatusCode statusCode, string responseContent)
+        private static HttpClient CreateMockHttpClient(HttpStatusCode statusCode, string responseContent)
         {
             var mockHandler = new HttpMockHelper.MockHttpMessageHandler(statusCode, responseContent);
             return new HttpClient(mockHandler);
