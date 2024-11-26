@@ -9,7 +9,8 @@ namespace AlphaVantageApiCall
             string apiKey = "";
             string symbol = "AAPL";
 
-            var apiClient = new ApiClient(apiKey);
+            HttpClient httpClient = new HttpClient();
+            ApiClient apiClient = new ApiClient(httpClient, apiKey);
 
             try
             {

@@ -7,7 +7,7 @@ namespace GreenblattsMagicFormula.Services
         private readonly HttpClient _httpClient;
         private readonly string _apiKey;
 
-        public ApiClient(string apiKey)
+        public ApiClient(HttpClient httpClient, string apiKey)
         {
             _httpClient = new HttpClient();
             _apiKey = apiKey;
