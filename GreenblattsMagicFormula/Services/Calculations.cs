@@ -22,9 +22,9 @@
             return ebit / (netWorkingCapital + fixedAssets);
         }
 
-        public static void PrintEarningsYieldAndReturnOnCapital(string symbol, double returnOnCapital, double earningsYield)
+        public static string PrintEarningsYieldAndReturnOnCapital(string symbol, double returnOnCapital, double earningsYield)
         {
-            Console.WriteLine($"{symbol} Return On Capital: {Math.Round(returnOnCapital * 100, 2)}%, Earnings Yield: {Math.Round(earningsYield * 100, 2)}%");
+            return $"{symbol} Return On Capital: {Math.Round(returnOnCapital * 100, 2)}%, Earnings Yield: {Math.Round(earningsYield * 100, 2)}%";
         }
     }
 }

@@ -1,18 +1,12 @@
 ﻿using GreenblattsMagicFormula.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GreenblattsMagicFormula
 {
-    public class Core
+    public class CoreService
     {
-        public async Task ExecuteMagicFormula()
+        public async Task<string> ExecuteMagicFormula(string symbol)
         {
             string apiKey = "";
-            string symbol = "AAPL";
 
             HttpClient httpClient = new HttpClient();
             ApiClient apiClient = new ApiClient(httpClient, apiKey);
@@ -37,11 +31,11 @@ namespace GreenblattsMagicFormula
                 var earningsYield = Calculations.CalculateEarningsYield(ebit, enterpriseValue);
                 var returnOnCapital = Calculations.CalculateReturnOnCapital(ebit, netWorkingCapital, propertyPlantEquipment);
 
-                Calculations.PrintEarningsYieldAndReturnOnCapital(symbol, returnOnCapital, earningsYield);
+                return Calculations.PrintEarningsYieldAndReturnOnCapital(symbol, returnOnCapital, earningsYield);
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error: {ex.Message}");
+                return $"Error: {ex.Message}";
             }
         }
     }

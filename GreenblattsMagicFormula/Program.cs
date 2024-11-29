@@ -1,10 +1,9 @@
-﻿namespace AlphaVantageApiCall
+﻿namespace GreenblattsMagicFormula
 {
-    class Program
+    public class Program
     {
-        static async Task Main(string[] args)
+        static void Main(string[] args)
         {
-           
         }
     }
 }
