@@ -1,0 +1,51 @@
+﻿@inherits LayoutComponentBase
+
+<PageTitle>Greenblatts Magic Formula</PageTitle>
+
+<div class="page">
+    <div class="sidebar">
+        <NavMenu />
+    </div>
+
+    <main>
+        <div class="top-row px-4">
+            <a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
+        </div>
+
+        <article class="content px-4">
+            @Body
+
+            <!-- Input field and button below "Hello, world!" -->
+            <div class="mt-4">
+                <input type="text" @bind="InputString" placeholder="Enter a string" />
+                <button @onclick="ProcessString">Add</button>
+            </div>
+
+            @if (!string.IsNullOrEmpty(Result))
+            {
+                <div class="mt-2">
+                    <p>Result: @Result</p>
+                </div>
+            }
+        </article>
+    </main>
+</div>
+
+@code {
+    private string InputString { get; set; } = string.Empty;
+    private string Result { get; set; } = string.Empty;
+
+    private void ProcessString()
+    {
+        if (!string.IsNullOrWhiteSpace(InputString))
+        {
+            Result = $"You entered: {InputString}";
+        }
+        else
+        {
+            Result = "Please enter a valid string.";
+        }
+
+        InputString = string.Empty; // Clear the input field after processing
+    }
+}
