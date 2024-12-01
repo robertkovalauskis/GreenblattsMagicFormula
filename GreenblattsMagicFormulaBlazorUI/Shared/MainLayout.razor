@@ -17,12 +17,12 @@
             @Body
             <div class="mt-4">
                 <input type="text" @bind="InputString" placeholder="Enter a string" />
-                <button @onclick="ProcessString">Add</button>
+                <button @onclick="ProcessString">Calculate</button>
             </div>
 
             @if (!string.IsNullOrEmpty(Result))
             {
-                <div class="mt-2">
+                <div class="mt-2" style="font-size: 1.5em; color: darkblue; background-color: #f9f9f9; padding: 10px; border-radius: 5px; margin-top: 10px; box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);">
                     <p>Result: @Result</p>
                 </div>
             }
