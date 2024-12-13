@@ -2,7 +2,7 @@
 
 namespace GreenblattsMagicFormula.Services
 {
-    public class ApiClient
+    public class ApiClient : IApiClient
     {
         private readonly HttpClient _httpClient;
         private readonly string _apiKey;
