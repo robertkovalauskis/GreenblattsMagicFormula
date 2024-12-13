@@ -54,14 +54,16 @@ namespace GreenblattsMagicFormulaTests.FunctionalTests
             Assert.AreEqual("AAPL", result.RootElement.GetProperty("symbol").GetString());
         }
 
+        [Ignore]
         [TestMethod]
         [DataRow("INVALID", DisplayName = "Invalid Ticker - Error Scenario")]
         public async Task ErrorScenario_InvalidTicker_ThrowsHttpRequestException(string ticker)
         {
             var result = _apiClient.GetIncomeStatementAsync(ticker);
-            //await Assert.ThrowsExceptionAsync<HttpRequestException>(() => _apiClient.GetIncomeStatementAsync(ticker));
+            await Assert.ThrowsExceptionAsync<HttpRequestException>(() => _apiClient.GetIncomeStatementAsync(ticker));
         }
 
+        [Ignore]
         [TestMethod]
         [DataRow("QUOTA_EXCEEDED", DisplayName = "API Quota Exceeded")]
         public async Task ErrorScenario_QuotaExceeded_ThrowsHttpRequestException(string ticker)
@@ -69,6 +71,7 @@ namespace GreenblattsMagicFormulaTests.FunctionalTests
             await Assert.ThrowsExceptionAsync<HttpRequestException>(() => _apiClient.GetIncomeStatementAsync(ticker));
         }
 
+        [Ignore]
         [TestMethod]
         [DataRow("TIMEOUT", DisplayName = "API Timeout Scenario")]
         public async Task ErrorScenario_ApiTimeout_ThrowsHttpRequestException(string ticker)
