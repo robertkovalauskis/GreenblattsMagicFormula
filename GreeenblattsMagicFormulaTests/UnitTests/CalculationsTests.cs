@@ -1,10 +1,8 @@
-using Allure.NUnit.Attributes;
 using GreenblattsMagicFormula.Services;
 
 namespace GreeenblattsMagicFormulaTests.UnitTests
 {
     [TestClass]
-    [AllureSuite("Unit tests")]
     public class CalculationsTests
     {
         [TestMethod]
@@ -19,7 +17,6 @@ namespace GreeenblattsMagicFormulaTests.UnitTests
         }
 
         [TestMethod]
-        [AllureTag("Unit")]
         public void CalculateNetWorkingCapital_NegativeValues_CorrectResult()
         {
             double currentAssets = -10000;
@@ -31,7 +28,6 @@ namespace GreeenblattsMagicFormulaTests.UnitTests
         }
 
         [TestMethod]
-        [AllureTag("Unit")]
         public void CalculateEnterpriseValue_ValidInputs_CorrectResult()
         {
             double price = 150;
@@ -43,7 +39,6 @@ namespace GreeenblattsMagicFormulaTests.UnitTests
         }
 
         [TestMethod]
-        [AllureTag("Unit")]
         public void CalculateEnterpriseValue_ZeroPrice_ZeroResult()
         {
             double price = 0;
@@ -55,7 +50,6 @@ namespace GreeenblattsMagicFormulaTests.UnitTests
         }
 
         [TestMethod]
-        [AllureTag("Unit")]
         public void CalculateEarningsYield_ValidInputs_CorrectResult()
         {
             double ebit = 5000;
@@ -67,7 +61,6 @@ namespace GreeenblattsMagicFormulaTests.UnitTests
         }
 
         [TestMethod]
-        [AllureTag("Unit")]
         public void CalculateReturnOnCapital_ValidInputs_CorrectResult()
         {
             double ebit = 5000;

@@ -1,11 +1,9 @@
-﻿using Allure.NUnit.Attributes;
-using GreenblattsMagicFormula.Services;
+﻿using GreenblattsMagicFormula.Services;
 using System.Text.Json;
 
 namespace GreeenblattsMagicFormulaTests.UnitTests
 {
     [TestClass]
-    [AllureSuite("Unit tests")]
     public class DataExtractorTests
     {
         [TestMethod]
@@ -24,7 +22,6 @@ namespace GreeenblattsMagicFormulaTests.UnitTests
         }
 
         [TestMethod]
-        [AllureTag("Unit")]
         [ExpectedException(typeof(InvalidOperationException))]
         public void ExtractMostRecentEbit_ShouldThrow_WhenAnnualReportsMissing()
         {
@@ -35,7 +32,6 @@ namespace GreeenblattsMagicFormulaTests.UnitTests
         }
 
         [TestMethod]
-        [AllureTag("Unit")]
         public void ExtractCurrentPrice_ShouldReturnPrice_WhenValidJsonProvided()
         {
             var json = @"{
@@ -51,7 +47,6 @@ namespace GreeenblattsMagicFormulaTests.UnitTests
         }
 
         [TestMethod]
-        [AllureTag("Unit")]
         [ExpectedException(typeof(InvalidOperationException))]
         public void ExtractCurrentPrice_ShouldThrow_WhenGlobalQuoteMissing()
         {
@@ -62,7 +57,6 @@ namespace GreeenblattsMagicFormulaTests.UnitTests
         }
 
         [TestMethod]
-        [AllureTag("Unit")]
         public void ExtractSharesOutstanding_ShouldReturnValue_WhenValidJsonProvided()
         {
             var json = @"{ ""SharesOutstanding"": ""56789.12"" }";
@@ -74,7 +68,6 @@ namespace GreeenblattsMagicFormulaTests.UnitTests
         }
 
         [TestMethod]
-        [AllureTag("Unit")]
         [ExpectedException(typeof(InvalidOperationException))]
         public void ExtractSharesOutstanding_ShouldThrow_WhenFieldMissing()
         {
@@ -85,7 +78,6 @@ namespace GreeenblattsMagicFormulaTests.UnitTests
         }
 
         [TestMethod]
-        [AllureTag("Unit")]
         public void ExtractBalanceSheetData_ShouldReturnValues_WhenValidJsonProvided()
         {
             var json = @"{
@@ -108,7 +100,6 @@ namespace GreeenblattsMagicFormulaTests.UnitTests
         }
 
         [TestMethod]
-        [AllureTag("Unit")]
         [ExpectedException(typeof(InvalidOperationException))]
         public void ExtractBalanceSheetData_ShouldThrow_WhenAnnualReportsMissing()
         {
@@ -119,7 +110,6 @@ namespace GreeenblattsMagicFormulaTests.UnitTests
         }
 
         [TestMethod]
-        [AllureTag("Unit")]
         [ExpectedException(typeof(InvalidOperationException))]
         public void ExtractFieldAsDouble_ShouldThrow_WhenFieldMissing()
         {
@@ -130,7 +120,6 @@ namespace GreeenblattsMagicFormulaTests.UnitTests
         }
 
         [TestMethod]
-        [AllureTag("Unit")]
         public void ExtractFieldAsDouble_ShouldReturnZero_WhenFieldIsNone()
         {
             var json = @"{ ""SharesOutstanding"": ""None"" }";
@@ -142,7 +131,6 @@ namespace GreeenblattsMagicFormulaTests.UnitTests
         }
 
         [TestMethod]
-        [AllureTag("Unit")]
         [ExpectedException(typeof(FormatException))]
         public void ExtractFieldAsDouble_ShouldThrow_WhenFieldValueNotParsable()
         {
