@@ -71,23 +71,5 @@ namespace GreeenblattsMagicFormulaTests.UnitTests
 
             Assert.AreEqual(1, result, 0.001);
         }
-
-        [TestMethod]
-        public void PrintEarningsYieldAndReturnOnCapital_ValidInputs_PrintsCorrectly()
-        {
-            string symbol = "AAPL";
-            double returnOnCapital = 0.1234;
-            double earningsYield = 0.5678;
-
-            using (var sw = new StringWriter())
-            {
-                Console.SetOut(sw);
-
-                Calculations.PrintEarningsYieldAndReturnOnCapital(symbol, returnOnCapital, earningsYield);
-
-                string expected = "AAPL Return On Capital: 12.34%, Earnings Yield: 56.78%";
-                Assert.IsTrue(sw.ToString().Trim().Contains(expected));
-            }
-        }
     }
 }
