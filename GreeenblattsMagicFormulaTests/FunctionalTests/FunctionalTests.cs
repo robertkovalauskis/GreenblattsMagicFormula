@@ -5,10 +5,13 @@ using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using GreenblattsMagicFormula.Services;
 using GreenblattsMagicFormula.Mocks;
+using Allure.NUnit;
+using Allure.NUnit.Attributes;
 
 namespace GreenblattsMagicFormulaTests.FunctionalTests
 {
     [TestClass]
+    [AllureSuite("Functional tests")]
     public class FunctionalTests
     {
         private ApiClient _apiClient;
@@ -45,6 +48,7 @@ namespace GreenblattsMagicFormulaTests.FunctionalTests
         }
 
         [TestMethod]
+        [AllureTag("Functional")]
         [DataRow("AAPL", DisplayName = "Happy Path - Valid Ticker")]
         public async Task HappyPath_ValidTicker_Success(string ticker)
         {
@@ -56,6 +60,7 @@ namespace GreenblattsMagicFormulaTests.FunctionalTests
 
         [Ignore]
         [TestMethod]
+        [AllureTag("Functional")]
         [DataRow("INVALID", DisplayName = "Invalid Ticker - Error Scenario")]
         public async Task ErrorScenario_InvalidTicker_ThrowsHttpRequestException(string ticker)
         {
@@ -65,6 +70,7 @@ namespace GreenblattsMagicFormulaTests.FunctionalTests
 
         [Ignore]
         [TestMethod]
+        [AllureTag("Functional")]
         [DataRow("QUOTA_EXCEEDED", DisplayName = "API Quota Exceeded")]
         public async Task ErrorScenario_QuotaExceeded_ThrowsHttpRequestException(string ticker)
         {
@@ -73,6 +79,7 @@ namespace GreenblattsMagicFormulaTests.FunctionalTests
 
         [Ignore]
         [TestMethod]
+        [AllureTag("Functional")]
         [DataRow("TIMEOUT", DisplayName = "API Timeout Scenario")]
         public async Task ErrorScenario_ApiTimeout_ThrowsHttpRequestException(string ticker)
         {

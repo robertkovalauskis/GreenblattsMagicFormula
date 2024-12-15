@@ -1,4 +1,5 @@
-﻿using GreenblattsMagicFormula.Helpers;
+﻿using Allure.NUnit.Attributes;
+using GreenblattsMagicFormula.Helpers;
 using GreenblattsMagicFormula.Services;
 using System.Net;
 using System.Text.Json;
@@ -6,6 +7,7 @@ using System.Text.Json;
 namespace GreeenblattsMagicFormulaTests.UnitTests
 {
     [TestClass]
+    [AllureSuite("Unit tests")]
     public class ApiClientTests
     {
         private const string ApiKey = "TEST_API_KEY";
@@ -18,6 +20,7 @@ namespace GreeenblattsMagicFormulaTests.UnitTests
         }
 
         [TestMethod]
+        [AllureTag("Unit")]
         public async Task GetIncomeStatementAsync_ValidResponse_ReturnsJsonDocument()
         {
             string jsonResponse = "{ \"annualReports\": [ { \"fiscalDateEnding\": \"2023-12-31\" } ] }";
@@ -31,6 +34,7 @@ namespace GreeenblattsMagicFormulaTests.UnitTests
         }
 
         [TestMethod]
+        [AllureTag("Unit")]
         public async Task GetGlobalQuoteAsync_ValidResponse_ReturnsJsonDocument()
         {
             string jsonResponse = "{ \"Global Quote\": { \"05. price\": \"150.00\" } }";
@@ -44,6 +48,7 @@ namespace GreeenblattsMagicFormulaTests.UnitTests
         }
 
         [TestMethod]
+        [AllureTag("Unit")]
         public async Task GetOverviewAsync_ValidResponse_ReturnsJsonDocument()
         {
             string jsonResponse = "{ \"Symbol\": \"AAPL\", \"SharesOutstanding\": \"123456789\" }";
@@ -58,6 +63,7 @@ namespace GreeenblattsMagicFormulaTests.UnitTests
         }
 
         [TestMethod]
+        [AllureTag("Unit")]
         public async Task GetBalanceSheetAsync_ValidResponse_ReturnsJsonDocument()
         {
             string jsonResponse = "{ \"annualReports\": [ { \"fiscalDateEnding\": \"2023-12-31\", \"totalAssets\": \"123456789\" } ] }";
