@@ -2,6 +2,7 @@
 
 ## Overview
 UI, API, and Functional tests are structured around the application's functional modules. A **functional module** represents a logically complete feature used by the end user. A **business scenario** (or business flow) defines the sequence of user actions that interact with a functional module. These test types require periodic reviews and updates to align with evolving business requirements.
+
 In contrast, **Unit Tests** are organized around the application's code architecture. They aim to cover as much backend logic as possible and typically require updates only when technical requirements change due to modifications in business needs.
 
 ---
@@ -32,6 +33,8 @@ An efficient test framework ensures that **Unit Tests** significantly outnumber 
 ---
 
 ## Benefits of Following the Test Pyramid
-- Faster execution with more **Unit Tests**.
-- Reduced maintenance overhead with fewer **UI Tests**.
-- Scalability and reliability through a proper distribution of test types.
+- **Fast and Comprehensive Feedback**: Enables a quick and exhaustive testing feedback cycle.
+- **Lower Maintenance Overhead**: Minimizes upkeep by reducing the number of **business flow-oriented** tests.
+- **Scalability and Reliability**: Ensures a stable and scalable test framework through a balanced distribution of test types.
+- **Alignment with Business Logic**: Creates a test framework that accurately represents and validates the underlying business knowledge.
+
