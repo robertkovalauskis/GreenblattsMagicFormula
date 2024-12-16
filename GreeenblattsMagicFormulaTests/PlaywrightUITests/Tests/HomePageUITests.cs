@@ -1,7 +1,6 @@
 ﻿using GreeenblattsMagicFormulaTests.PlaywrightUITests.Pages;
 using Microsoft.Playwright;
 using Microsoft.Playwright.MSTest;
-using System.Diagnostics;
 
 namespace GreeenblattsMagicFormulaTests.PlaywrightUITests.Tests
 {
