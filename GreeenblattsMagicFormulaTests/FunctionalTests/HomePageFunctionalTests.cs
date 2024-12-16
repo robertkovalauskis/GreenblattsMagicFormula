@@ -5,7 +5,7 @@ using GreenblattsMagicFormula.Mocks;
 namespace GreenblattsMagicFormulaTests.FunctionalTests
 {
     [TestClass]
-    public class FunctionalTests
+    public class HomePageFunctionalTests
     {
         private ApiClient _apiClient;
 
