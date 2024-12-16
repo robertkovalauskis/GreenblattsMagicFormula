@@ -7,7 +7,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GreenblattsMagicFormula", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GreeenblattsMagicFormulaTests", "GreeenblattsMagicFormulaTests\GreeenblattsMagicFormulaTests.csproj", "{B307D1C6-9131-4F6E-98CA-D5D43F5A6444}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GreenblattsMagicFormulaBlazorUI", "GreenblattsMagicFormulaBlazorUI\GreenblattsMagicFormulaBlazorUI.csproj", "{82AC0C63-4DCB-4178-AFB2-6FFA7FFA3CC8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GreenblattsMagicFormulaBlazorUI", "GreenblattsMagicFormulaBlazorUI\GreenblattsMagicFormulaBlazorUI.csproj", "{82AC0C63-4DCB-4178-AFB2-6FFA7FFA3CC8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{B237D0DA-FA1D-4B87-9FD6-FD6DB0A65DBC}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

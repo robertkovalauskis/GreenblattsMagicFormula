@@ -4,6 +4,13 @@ using Microsoft.Playwright.MSTest;
 
 namespace GreeenblattsMagicFormulaTests.PlaywrightUITests
 {
+    /* APPROACH
+    * UI tests are organized around the application's functional modules.
+    * A functional module is a logically complete feature used by the end user.
+    * A business scenario (or business flow) refers to the sequence of user actions that utilize a functional module.
+    * UI tests automate business scenarios by interacting with the application's UI interface.
+    */
+
     [TestClass]
     public class HomePageUITests : PageTest
     {
