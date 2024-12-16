@@ -4,12 +4,12 @@ using GreenblattsMagicFormula.Mocks;
 
 namespace GreenblattsMagicFormulaTests.FunctionalTests
 {
-    /* APPROACH
-     * Functional tests are structured around the application's functional modules.
-     * A functional module represents a logically complete feature used by the end user.
-     * A business scenario (or business flow) refers to the sequence of user actions that interact with a functional module.
-     * Functional tests automate these business scenarios by directly invoking the relevant methods within the application.
-     */
+    /// <summary>
+    /// Functional tests are structured around the application's functional modules.
+    /// A functional module represents a logically complete feature used by the end user.
+    /// A business scenario (or business flow) refers to the sequence of user actions that interact with a functional module.
+    /// Functional tests automate these business scenarios by directly invoking the relevant methods within the application.
+    /// </summary>
 
     [TestClass]
     public class HomePageFunctionalTests
