@@ -7,11 +7,10 @@ namespace GreenblattsMagicFormula
         public async Task<string> ExecuteMagicFormula(string symbol)
         {
             string apiKey = "";
-
             HttpClient httpClient = new HttpClient();
             ApiClient apiClient = new ApiClient(httpClient, apiKey);
 
-            try
+            if (!string.IsNullOrWhiteSpace(apiKey))
             {
                 var incomeStatementData = await apiClient.GetIncomeStatementAsync(symbol);
                 var ebit = DataExtractor.ExtractMostRecentEbit(incomeStatementData);
@@ -33,9 +32,9 @@ namespace GreenblattsMagicFormula
 
                 return Calculations.PrintEarningsYieldAndReturnOnCapital(symbol, returnOnCapital, earningsYield);
             }
-            catch (Exception ex)
+            else
             {
-                return $"Error: {ex.Message}";
+                return $"Error - Alpha Vantage API Key is not provided";
             }
         }
     }
