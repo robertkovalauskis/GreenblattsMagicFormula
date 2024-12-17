@@ -6,11 +6,15 @@ namespace GreenblattsMagicFormula.Services
     {
         public static double ExtractMostRecentEbit(JsonDocument jsonDocument)
         {
+            VerifyJsonPayload(jsonDocument);
+
             return ExtractFieldFromMostRecentReport(jsonDocument, "ebit");
         }
 
         public static double ExtractCurrentPrice(JsonDocument jsonDocument)
         {
+            VerifyJsonPayload(jsonDocument);
+
             if (jsonDocument.RootElement.TryGetProperty("Global Quote", out JsonElement globalQuote))
             {
                 return ExtractFieldAsDouble(globalQuote, "05. price");
@@ -20,11 +24,15 @@ namespace GreenblattsMagicFormula.Services
 
         public static double ExtractSharesOutstanding(JsonDocument jsonDocument)
         {
+            VerifyJsonPayload(jsonDocument);
+
             return ExtractFieldAsDouble(jsonDocument.RootElement, "SharesOutstanding");
         }
 
         public static (double PropertyPlantEquipment, double TotalCurrentAssets, double TotalCurrentLiabilities) ExtractBalanceSheetData(JsonDocument jsonDocument)
         {
+            VerifyJsonPayload(jsonDocument);
+
             if (jsonDocument.RootElement.TryGetProperty("annualReports", out JsonElement annualReports))
             {
                 JsonElement mostRecentReport = annualReports.EnumerateArray().First();
@@ -39,6 +47,8 @@ namespace GreenblattsMagicFormula.Services
 
         private static double ExtractFieldFromMostRecentReport(JsonDocument jsonDocument, string fieldName)
         {
+            VerifyJsonPayload(jsonDocument);
+
             if (jsonDocument.RootElement.TryGetProperty("annualReports", out JsonElement annualReports))
             {
                 JsonElement mostRecentReport = annualReports.EnumerateArray().First();
@@ -62,6 +72,15 @@ namespace GreenblattsMagicFormula.Services
             }
 
             throw new InvalidOperationException($"Field '{fieldName}' not found.");
+        }
+
+        private static void VerifyJsonPayload(JsonDocument jsonDocument)
+        {
+            if (jsonDocument.RootElement.TryGetProperty("Information", out JsonElement informationElement))
+            {
+                string informationMessage = informationElement.GetString();
+                throw new InvalidOperationException($"The number of API calls exceeded.\nAPI Response: {informationMessage}");
+            }
         }
     }
 }

@@ -38,11 +38,22 @@
     {
         if (!string.IsNullOrWhiteSpace(InputString))
         {
-            Result = await CoreService.ExecuteMagicFormula(InputString); ;
+            try
+            {
+                Result = await CoreService.ExecuteMagicFormula(InputString);
+            }
+            catch (InvalidOperationException ex)
+            {
+                Result = ex.Message;
+            }
+            catch (Exception ex)
+            {
+                Result = $"An unexpected error occurred: {ex.Message}";
+            }
         }
         else
         {
-            Result = "Please enter a valid string.";
+            Result = "Please enter a valid ticker.";
         }
 
         InputString = string.Empty;
