@@ -11,9 +11,9 @@ In contrast, **Unit Tests** are organized around the application's code architec
 
 The distinction between various test types lies in how they trigger the backend logic:
 
-1. **UI Tests**: Interact with the application's front end (FE).
-2. **API Tests**: Make direct calls to the relevant API endpoints.
-3. **Functional Tests**: Directly call relevant methods (requires access to the application's code).
+1. **UI Tests**: Interact with the application's front end (FE). Follow business scenarious.
+2. **API Tests**: Make direct calls to the relevant API endpoints. May follow business scenarious, but more focused on isolated API's.
+3. **Functional Tests**: Directly call relevant methods (requires access to the application's code). Follow business scenarious.
 4. **Unit Tests**: Test the smallest logical pieces of code, such as individual methods.
 
 ---
@@ -23,7 +23,7 @@ The distinction between various test types lies in how they trigger the backend 
 The sequence of these test types aligns with the **test pyramid**:
 
 - **UI and API Tests** are at the top and should be the least numerous and represent the **external Black box** testing layer.
-- **Functional Tests** and sit in the middle.
+- **Functional Tests** go right after, and sit in the middle. Represent **internal White Box** testing layer. 
 - **Unit Tests** form the base and should be the most numerous, representing together with **Functional tests** the **internal White box** testing layer.
 
 
@@ -33,6 +33,7 @@ An efficient test framework ensures that **Unit Tests** significantly outnumber 
 ---
 
 ## Benefits of Following the Test Pyramid
+- **Sustainable Test Maintenance**: Ensures long-term cost efficiency by preserving the value of invested resources and preventing test suite degradation, safeguarding the business investment.
 - **Fast and Comprehensive Feedback**: Enables a quick and exhaustive testing feedback cycle.
 - **Lower Maintenance Overhead**: Minimizes upkeep by reducing the number of **business flow-oriented** tests.
 - **Scalability and Reliability**: Ensures a stable and scalable test framework through a balanced distribution of test types.
