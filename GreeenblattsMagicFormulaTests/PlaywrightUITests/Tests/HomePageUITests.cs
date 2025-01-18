@@ -16,11 +16,18 @@ namespace GreeenblattsMagicFormulaTests.PlaywrightUITests.Tests
     {
         protected IBrowser _browser;
         protected HomePage _homePage;
+        protected IPage _page;
 
         [TestInitialize]
         public async Task TestInitialize()
         {
-            _homePage = new HomePage(Page);
+            _browser = await Playwright.Chromium.LaunchAsync(new BrowserTypeLaunchOptions
+            {
+                Headless = false,
+            });
+            _page = await _browser.NewPageAsync();
+
+            _homePage = new HomePage(_page);
         }
 
         [TestCleanup]
@@ -37,7 +44,7 @@ namespace GreeenblattsMagicFormulaTests.PlaywrightUITests.Tests
         [DataRow("AAPL", DisplayName = "Main Business Flow - Calcualte ROC and EV of a stock")]
         public async Task HomePage_ValidStock_Success(string ticker)
         {
-            await Page.GotoAsync("https://localhost:7129/");
+            await _page.GotoAsync("https://localhost:7129/");
 
             await Expect(_homePage.MainHeader).ToBeVisibleAsync();
             await Expect(_homePage.Paragraph).ToBeVisibleAsync();
