@@ -17,6 +17,7 @@ namespace GreeenblattsMagicFormulaTests.PlaywrightUITests.Tests
         protected IBrowser _browser;
         protected HomePage _homePage;
         protected IPage _page;
+        const string BlazorAppLocalAddress = "https://localhost:7129/";
 
         [TestInitialize]
         public async Task TestInitialize()
@@ -44,7 +45,7 @@ namespace GreeenblattsMagicFormulaTests.PlaywrightUITests.Tests
         [DataRow("AAPL", DisplayName = "Main Business Flow - Calcualte ROC and EV of a stock")]
         public async Task HomePage_ValidStock_Success(string ticker)
         {
-            await _page.GotoAsync("https://localhost:7129/");
+            await _page.GotoAsync(BlazorAppLocalAddress);
 
             await Expect(_homePage.MainHeader).ToBeVisibleAsync();
             await Expect(_homePage.Paragraph).ToBeVisibleAsync();

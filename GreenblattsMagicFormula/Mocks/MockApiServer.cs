@@ -21,7 +21,7 @@ namespace GreenblattsMagicFormula.Mocks
                 Response.Create()
                     .WithStatusCode(200)
                     .WithHeader("Content-Type", "application/json")
-                    .WithBody("{\"annualReports\": [{\"fiscalDateEnding\": \"2023-12-31\", \"ebit\": 500000}]}")
+                    .WithBody("{\"annualReports\": [{\"fiscalDateEnding\": \"2023-12-31\", \"ebit\": \"500000\"}]}")
             );
 
             _server.Given(
@@ -41,7 +41,7 @@ namespace GreenblattsMagicFormula.Mocks
                 Response.Create()
                     .WithStatusCode(200)
                     .WithHeader("Content-Type", "application/json")
-                    .WithBody("{\"Symbol\": \"AAPL\", \"SharesOutstanding\": \"1000000\"}") 
+                    .WithBody("{\"Symbol\": \"AAPL\", \"SharesOutstanding\": \"1000000\"}")
             );
 
             _server.Given(
@@ -51,7 +51,7 @@ namespace GreenblattsMagicFormula.Mocks
                 Response.Create()
                     .WithStatusCode(200)
                     .WithHeader("Content-Type", "application/json")
-                    .WithBody("{\"annualReports\": [{\"fiscalDateEnding\": \"2023-12-31\", \"totalCurrentAssets\": \"5000000\", \"totalCurrentLiabilities\": \"2500000\"}]}")
+                    .WithBody("{\"annualReports\": [{\"fiscalDateEnding\": \"2023-12-31\", \"propertyPlantEquipment\": \"3000000\", \"totalCurrentAssets\": \"5000000\", \"totalCurrentLiabilities\": \"2500000\"}]}")
             );
         }
 
