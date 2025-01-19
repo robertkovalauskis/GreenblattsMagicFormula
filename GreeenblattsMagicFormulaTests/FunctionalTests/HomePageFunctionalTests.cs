@@ -14,8 +14,12 @@ namespace GreenblattsMagicFormulaTests.FunctionalTests
     [TestClass]
     public class HomePageFunctionalTests
     {
-        private MockApiServer _mockApiServer;
-        private HttpClient _httpClient;
+        private MockApiServer? _mockApiServer;
+        private HttpClient? _httpClient;
+        const string IncomeStatementEndpoint = "/query?function=INCOME_STATEMENT";
+        const string GlobalQuoteEndpoint = "/query?function=GLOBAL_QUOTE";
+        const string OverviewEndpoint = "/query?function=OVERVIEW";
+        const string BalanceSheetEndpoint = "/query?function=BALANCE_SHEET";
 
         [TestInitialize]
         public void TestInitialize()
@@ -34,19 +38,19 @@ namespace GreenblattsMagicFormulaTests.FunctionalTests
         [DataRow("AAPL", DisplayName = "Main Business Flow - Calcualte ROC and EV of a stock")]
         public async Task ExecuteMagicFormula_ValidTicker_CalculatesCorrectly(string ticker)
         {
-            var incomeStatementResponse = await _httpClient.GetAsync("/query?function=INCOME_STATEMENT");
+            var incomeStatementResponse = await _httpClient.GetAsync(IncomeStatementEndpoint);
             var incomeStatementJson = await Helpers.ConvertResponseToJsonDocument(incomeStatementResponse);
             var ebit = DataExtractor.ExtractMostRecentEbit(incomeStatementJson);
 
-            var globalQuoteResponse = await _httpClient.GetAsync("/query?function=GLOBAL_QUOTE");
+            var globalQuoteResponse = await _httpClient.GetAsync(GlobalQuoteEndpoint);
             var globalQuoteJson = await Helpers.ConvertResponseToJsonDocument(globalQuoteResponse);
             var currentPrice = DataExtractor.ExtractCurrentPrice(globalQuoteJson);
 
-            var overviewResponse = await _httpClient.GetAsync("/query?function=OVERVIEW");
+            var overviewResponse = await _httpClient.GetAsync(OverviewEndpoint);
             var overviewJson = await Helpers.ConvertResponseToJsonDocument(overviewResponse);
             var sharesOutstanding = DataExtractor.ExtractSharesOutstanding(overviewJson);
 
-            var balanceSheetResponse = await _httpClient.GetAsync("/query?function=BALANCE_SHEET");
+            var balanceSheetResponse = await _httpClient.GetAsync(BalanceSheetEndpoint);
             var balanceSheetJson = await Helpers.ConvertResponseToJsonDocument(balanceSheetResponse);
             var (propertyPlantEquipment, totalCurrentAssets, totalCurrentLiabilities) = DataExtractor.ExtractBalanceSheetData(balanceSheetJson);
 
@@ -57,7 +61,7 @@ namespace GreenblattsMagicFormulaTests.FunctionalTests
             var returnOnCapital = Calculations.CalculateReturnOnCapital(ebit, netWorkingCapital, propertyPlantEquipment);
 
             var result = Calculations.PrintEarningsYieldAndReturnOnCapital(ticker, returnOnCapital, earningsYield);
-            Console.WriteLine(result);
+            Assert.AreEqual("AAPL Return On Capital: 9.09%, Earnings Yield: 0.33%", result);
         }
     }
 }
