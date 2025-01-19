@@ -1,8 +1,6 @@
-﻿using GreenblattsMagicFormula;
-using GreenblattsMagicFormula.Mocks;
+﻿using GreenblattsMagicFormula.Mocks;
 using GreenblattsMagicFormula.Services;
-using System.Text.Json;
-using System;
+using GreeenblattsMagicFormulaTests.Utils;
 
 namespace GreenblattsMagicFormulaTests.FunctionalTests
 {
@@ -32,11 +30,34 @@ namespace GreenblattsMagicFormulaTests.FunctionalTests
             _mockApiServer.Dispose();
         }
 
-        [Ignore]
         [TestMethod]
-        public async Task ExecuteMagicFormula_ValidTicker_CalculatesCorrectly()
+        [DataRow("AAPL", DisplayName = "Main Business Flow - Calcualte ROC and EV of a stock")]
+        public async Task ExecuteMagicFormula_ValidTicker_CalculatesCorrectly(string ticker)
         {
-            // TODO
+            var incomeStatementResponse = await _httpClient.GetAsync("/query?function=INCOME_STATEMENT");
+            var incomeStatementJson = await Helpers.ConvertResponseToJsonDocument(incomeStatementResponse);
+            var ebit = DataExtractor.ExtractMostRecentEbit(incomeStatementJson);
+
+            var globalQuoteResponse = await _httpClient.GetAsync("/query?function=GLOBAL_QUOTE");
+            var globalQuoteJson = await Helpers.ConvertResponseToJsonDocument(globalQuoteResponse);
+            var currentPrice = DataExtractor.ExtractCurrentPrice(globalQuoteJson);
+
+            var overviewResponse = await _httpClient.GetAsync("/query?function=OVERVIEW");
+            var overviewJson = await Helpers.ConvertResponseToJsonDocument(overviewResponse);
+            var sharesOutstanding = DataExtractor.ExtractSharesOutstanding(overviewJson);
+
+            var balanceSheetResponse = await _httpClient.GetAsync("/query?function=BALANCE_SHEET");
+            var balanceSheetJson = await Helpers.ConvertResponseToJsonDocument(balanceSheetResponse);
+            var (propertyPlantEquipment, totalCurrentAssets, totalCurrentLiabilities) = DataExtractor.ExtractBalanceSheetData(balanceSheetJson);
+
+            var netWorkingCapital = Calculations.CalculateNetWorkingCapital(totalCurrentAssets, totalCurrentLiabilities);
+            var enterpriseValue = Calculations.CalculateEnterpriseValue(currentPrice, sharesOutstanding);
+
+            var earningsYield = Calculations.CalculateEarningsYield(ebit, enterpriseValue);
+            var returnOnCapital = Calculations.CalculateReturnOnCapital(ebit, netWorkingCapital, propertyPlantEquipment);
+
+            var result = Calculations.PrintEarningsYieldAndReturnOnCapital(ticker, returnOnCapital, earningsYield);
+            Console.WriteLine(result);
         }
     }
 }
