@@ -1,3 +1,33 @@
+# Set Up Resume Project Locally
+
+## Run Jenkins and SonarQube Servers in Docker Containers
+Launch both Jenkins and SonarQube using Docker.
+
+![RunJenkinsInContainer](Media/RunJenkinsInContainer.gif)
+
+---
+
+## Run Tests in a Jenkins Job
+Trigger automated tests through a Jenkins pipeline.
+
+![RunTestsInJenkins](Media/RunTestsInJenkins.gif)
+
+---
+
+## Run a SonarQube Scan in a Jenkins Job
+Perform static code analysis with SonarQube via Jenkins.
+
+![RunSonarQubeScan](Media/RunSonarQubeScan.gif)
+
+---
+
+## Debug Tests Locally
+Debug a failing test locally, fix the issue, and rerun tests.
+
+![DebugTestOnLocalAndRetest](Media/DebugTestOnLocalAndRetest.gif)
+
+---
+
 # Test Automation Paradigm
 
 ## Overview
